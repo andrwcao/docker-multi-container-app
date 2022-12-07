@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t andrwcao/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - - docker run -e CI=true andrwcao/react-test npm test
+
+after_success:
+  - docker build -t andrwcao/multi-client ./client
+  - docker build -t andrwcao/multi-nginx ./nginx
+  - docker build -t andrwcao/multi-server ./server
+  - docker build -t andrwcao/multi-worker ./worker
