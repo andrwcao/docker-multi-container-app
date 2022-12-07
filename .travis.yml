@@ -13,3 +13,10 @@ after_success:
   - docker build -t andrwcao/multi-nginx ./nginx
   - docker build -t andrwcao/multi-server ./server
   - docker build -t andrwcao/multi-worker ./worker
+  # Login to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push docker images to docker hub
+  - docker push andrwcao/multi-client
+  - docker push andrwcao/multi-nginx
+  - docker push andrwcao/multi-server
+  - docker push andrwcao/multi-worker
